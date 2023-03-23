@@ -1,17 +1,17 @@
 import random
 import math
-import matplotlib.pyplot as plt
 
 
-def rpv(n: int, d: int, method: str = "normalisation", shuffle: bool = False) -> list[list[float]]:
+def sample(n: int, d: int, method: str = "normalisation", shuffle: bool = False) -> list[list[float]]:
     '''
-    Generates a list of random probability vectors (rpv) with different methods.
+    Generates a list of n d-dimensional random vectors whose elements sum up to one
+    with different methods.
 
     Args:
         n (int): desired number of vectors.
         d (int): dimension.
-        method (str): desired method (see rpv_* functions in this module).
-        shuffle (bool): shall each rpv be randomly shuffled? Default is False.
+        method (str): desired method (see sample_* functions in this module).
+        shuffle (bool): shall each vector be randomly shuffled? Default is False.
     Returns:
         List of length n of d-dimensional lists.
     '''
@@ -19,11 +19,11 @@ def rpv(n: int, d: int, method: str = "normalisation", shuffle: bool = False) ->
     assert d >= 2
 
     funs = {
-        'normalisation': rpv_normalisation,
-        'exponential': rpv_exponential,
-        'iterative': rpv_iterative,
-        'trigonometric': rpv_trigonometric,
-        'simplex': rpv_simplex
+        'normalisation': sample_normalisation,
+        'exponential': sample_exponential,
+        'iterative': sample_iterative,
+        'trigonometric': sample_trigonometric,
+        'simplex': sample_simplex
     }
     assert method in funs.keys()
 
@@ -49,9 +49,9 @@ def normalise(x: list[float]) -> list[float]:
     return list(map(lambda e: e / sum(x), x))
 
 
-def rpv_normalisation(n: int, d: int) -> list[list[float]]:
+def sample_normalisation(n: int, d: int) -> list[list[float]]:
     '''
-    Generates a list of random probability vectors (rpv) via normalisation.
+    Generates a list of random vectors via normalisation.
     I.e., (1) each component is sampled from a U(0,1) distribution and subsequently
     (2) each component is divided by the components' sum.
 
@@ -73,9 +73,9 @@ def rpv_normalisation(n: int, d: int) -> list[list[float]]:
     return vecs
 
 
-def rpv_iterative(n: int, d: int) -> list[list[float]]:
+def sample_iterative(n: int, d: int) -> list[list[float]]:
     '''
-    Generates a list of random probability vectors (rpv) via an iterative approach:
+    Generates a list of random vectors via an iterative approach:
     I.e., the i-th component of the rpv is sampled uniformly at random from [0, s] where s is
     the sum of the 0, ..., (i-1)st components. The last component is finally (1-s). This
     way it is unsured that the vectors are normalised.
@@ -89,7 +89,7 @@ def rpv_iterative(n: int, d: int) -> list[list[float]]:
     assert n >= 1
     assert d >= 2
 
-    def sample_rpv_iterative(d):
+    def sample_sample_iterative(d):
         s = 0.0
         vec = [None] * d
         for j in range(d - 1):
@@ -98,13 +98,13 @@ def rpv_iterative(n: int, d: int) -> list[list[float]]:
         vec[d - 1] = 1 - s
         return vec
 
-    vecs = [sample_rpv_iterative(d) for _ in range(n)]
+    vecs = [sample_sample_iterative(d) for _ in range(n)]
     return list(vecs)
 
 
-def rpv_trigonometric(n: int, d: int) -> list[list[float]]:
+def sample_trigonometric(n: int, d: int) -> list[list[float]]:
     '''
-    Generates a list of random probability vectors (rpv) via a trigonometric method.
+    Generates a list of random vectors via a trigonometric method.
     Section 5 in the following paper contains the details: Maziero, J. Generating Pseudo-Random
     Discrete Probability Distributions. Brazilian Journal of Physics 45, 377–382 (2015).
     https://doi.org/10.1007/s13538-015-0337-8)
@@ -118,7 +118,7 @@ def rpv_trigonometric(n: int, d: int) -> list[list[float]]:
     assert n >= 1
     assert d >= 2
 
-    def sample_rpv_trigonometric(d):
+    def sample_sample_trigonometric(d):
         ts = [random.random() for _ in range(d - 1)]
 
         # build vector of weights
@@ -137,12 +137,12 @@ def rpv_trigonometric(n: int, d: int) -> list[list[float]]:
 
         return vec
 
-    return [sample_rpv_trigonometric(d) for _ in range(n)]
+    return [sample_sample_trigonometric(d) for _ in range(n)]
 
 
-def rpv_exponential(n: int, d: int) -> list[list[float]]:
+def sample_exponential(n: int, d: int) -> list[list[float]]:
     '''
-    Generates a list of random probability vectors (rpv) by means of the inverse
+    Generates a list of random vectors by means of the inverse
     exponential distribution function: I.e., the i-th component of the rpv is sampled
     uniformly at random from [0, s] where s is the sum of the 0, ..., (i-1)st
     components. The last component is finally (1-s). This way it is unsured that
@@ -165,13 +165,12 @@ def rpv_exponential(n: int, d: int) -> list[list[float]]:
     return vecs
 
 
-def rpv_simplex(n: int, d: int) -> list[list[float]]:
+def sample_simplex(n: int, d: int) -> list[list[float]]:
     '''
-    Generates a list of random probability vectors (rpv) via simplex sampling.
+    Generates a list of random vectors via simplex sampling.
 
-    See [1] for details on this method.
-
-    [1] Grimme, C. Picking a Uniformly Random Point from an Arbitrary Simplex.
+    See the following paper for details on this method:
+    Grimme, C. Picking a Uniformly Random Point from an Arbitrary Simplex.
     Technical Report. https://doi.org/10.13140/RG.2.1.3807.6968
 
     Args:
@@ -197,38 +196,3 @@ def rpv_simplex(n: int, d: int) -> list[list[float]]:
 
     vecs = [list(sample_vector_from_unit_simplex(d)) for _ in range(n)]
     return vecs
-
-
-if __name__ == "__main__":
-    # parameters
-    n, d = 1000, 3
-
-    # plot
-    fig = plt.figure()
-
-    methods = ["normalisation", "iterative", "exponential", "simplex", "trigonometric"]
-    k = 1
-    for i, method in enumerate(methods):
-        for j, shuffle in enumerate([True, False]):
-            vecs = list(rpv(n, d, method = method, shuffle = shuffle))
-            # print(list(vecs))
-            ss = map(sum, vecs)
-            # print(list(ss))
-
-            sp = fig.add_subplot(1, 2 * len(methods), k, projection = '3d')
-            k += 1
-
-            xs = [x[0] for x in vecs]
-            ys = [x[1] for x in vecs]
-            zs = [x[2] for x in vecs]
-
-            sp.set_xlabel('x')
-            sp.set_ylabel('y')
-            sp.set_zlabel('z')
-            title = method
-            if shuffle:
-                title += " (shuffled)"
-            sp.set_title(title)
-            sp.scatter(xs, ys, zs, marker = 'o')
-
-    plt.show()
