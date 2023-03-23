@@ -1,8 +1,8 @@
 import itertools
-from randvec.methods import sample
+from randvec import sample
 
 
-def test_that_rpvs_sum_up_to_one():
+def test_that_vector_sum_is_one():
     n = 5
     ds = [2, 4]
     methods = ["normalisation", "iterative", "exponential", "simplex", "trigonometric"]

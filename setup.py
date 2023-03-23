@@ -1,12 +1,11 @@
 import setuptools
-from randvec.version import __version__
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name = "randvec",
-    version = __version__,
+    version = "1.0.2",
     author = "Jakob Bossek",
     author_email = "j.bossek@gmail.com",
     description = "Generate random and uniform vectors whose components sum up to one",
@@ -16,7 +15,7 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     packages = setuptools.find_packages(exclude = ["tests"]),
     python_requires = '>=3.7',
-    py_modules = ["methods"],
+    py_modules = ["randvec"],
     package_dir = {},
     # make it easy for users to find the package
     # (see https://pypi.org/classifiers/)

@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from randvec.methods import sample
+from randvec import sample
 
 # parameters
 n, d = 1000, 3
