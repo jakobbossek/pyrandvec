@@ -25,7 +25,7 @@ testpypi-web:
 
 # install TestPyPi version
 testpypi-install:
-	python -m pip install --index-url https://test.pypi.org/simple/ --no-deps randvec
+	python -m pip install --index-url https://test.pypi.org/simple/ --no-deps pyrandvec
 
 # upload to PyPi (see ~/.pypirc for token)
 pypi-upload:
@@ -36,7 +36,7 @@ pypi-web:
 
 # install PyPi version
 pypi-install:
-	python -m pip install randvec
+	python -m pip install pyrandvec
 
 install-local:
 	pip install --editable .

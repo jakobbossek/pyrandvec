@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name = 'pyrandvec',
-    version = '1.0.2',
+    version = '1.0.1',
     author = 'Jakob Bossek',
     author_email = 'j.bossek@gmail.com',
     description = 'Generate random vectors whose components sum up to one',

@@ -1,4 +1,4 @@
-# Random vectors with sum one
+# Generate random vectors whose components sum up to one
 
 This Python3 module implements different approaches [1] to randomly and uniformly generate d-dimensional vectors whose components sum up to one.
 
@@ -10,24 +10,24 @@ This Python3 module implements different approaches [1] to randomly and uniforml
 Run the following to install the module:
 
 ```bash
-pip install randvec
+pip install pyrandvec
 ```
 
 ## Usage
 
 ```python
-from randvec.methods import sample
+from pyrandvec import sample
 
 # Generate 10 4-dimensional vectors with the simplex-method
-sample(10, 4, method = "simplex")
+sample(10, 4, method = 'simplex')
 
 # Generate 10 3-dimensional vectors with the trigonometric methdod with subsequent shuffling
-sample(10, 3, method = "trigonometric", shuffle = True)
+sample(10, 3, method = 'trigonometric', shuffle = True)
 ```
 
 # Developing randvec
 
-To install the **randvec** module along with the tools you need to develop and run test, run the following command in your *virtual environment* (virtualenv):
+To install the **pyrandvec** module along with the tools you need to develop and run test, run the following command in your *virtual environment* (virtualenv):
 
 ```bash
 pip install -e .[dev]
