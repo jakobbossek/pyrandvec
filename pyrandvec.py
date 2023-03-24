@@ -1,11 +1,11 @@
+"""Module with methods for the generation of random vectors with a fixed sum of one."""
 import random
 import math
 
 
-def sample(n: int, d: int, method: str = "normalisation", shuffle: bool = False) -> list[list[float]]:
-    '''
-    Generates a list of n d-dimensional random vectors whose elements sum up to one
-    with different methods.
+def sample(n: int, d: int, method: str = 'normalisation', shuffle: bool = False) -> list[list[float]]:
+    """
+    Generate a list of n d-dimensional random vectors whose elements sum up to one.
 
     Args:
         n (int): desired number of vectors.
@@ -14,7 +14,7 @@ def sample(n: int, d: int, method: str = "normalisation", shuffle: bool = False)
         shuffle (bool): shall each vector be randomly shuffled? Default is False.
     Returns:
         List of length n of d-dimensional lists.
-    '''
+    """
     assert n >= 1
     assert d >= 2
 
@@ -37,30 +37,33 @@ def sample(n: int, d: int, method: str = "normalisation", shuffle: bool = False)
 
 
 def normalise(x: list[float]) -> list[float]:
-    '''
-    Utility function to normalise a list of floating point numbers.
-    I.e., the function divides each component of the list by its sum.
+    """
+    Normalise a list of floating point numbers.
+
+    I.e., the function divides each component of the list by its sum such that
+    the resulting list has sum one.
 
     Args:
         x (list[float]): Input list.
     Returns:
         Normalised list.
-    '''
+    """
     return list(map(lambda e: e / sum(x), x))
 
 
 def sample_normalisation(n: int, d: int) -> list[list[float]]:
-    '''
-    Generates a list of random vectors via normalisation.
-    I.e., (1) each component is sampled from a U(0,1) distribution and subsequently
-    (2) each component is divided by the components' sum.
+    """
+    Generate a list of random vectors via normalisation.
+
+    The process works as follows: (1) each component is sampled from a U(0,1) distribution
+    and subsequently (2) each component is divided by the components' sum.
 
     Args:
         n (int): desired number of vectors.
         d (int): dimension.
     Returns:
         List of length n of d-dimensional lists.
-    '''
+    """
     assert n >= 1
     assert d >= 2
 
@@ -74,9 +77,10 @@ def sample_normalisation(n: int, d: int) -> list[list[float]]:
 
 
 def sample_iterative(n: int, d: int) -> list[list[float]]:
-    '''
-    Generates a list of random vectors via an iterative approach:
-    I.e., the i-th component of the rpv is sampled uniformly at random from [0, s] where s is
+    """
+    Generate a list of random vectors via an iterative approach.
+
+    More precisely, the i-th component of the rpv is sampled uniformly at random from [0, s] where s is
     the sum of the 0, ..., (i-1)st components. The last component is finally (1-s). This
     way it is unsured that the vectors are normalised.
 
@@ -85,7 +89,7 @@ def sample_iterative(n: int, d: int) -> list[list[float]]:
         d (int): dimension.
     Returns:
         List of length n of d-dimensional lists.
-    '''
+    """
     assert n >= 1
     assert d >= 2
 
@@ -103,8 +107,9 @@ def sample_iterative(n: int, d: int) -> list[list[float]]:
 
 
 def sample_trigonometric(n: int, d: int) -> list[list[float]]:
-    '''
-    Generates a list of random vectors via a trigonometric method.
+    """
+    Generate a list of random vectors via a trigonometric method.
+
     Section 5 in the following paper contains the details: Maziero, J. Generating Pseudo-Random
     Discrete Probability Distributions. Brazilian Journal of Physics 45, 377–382 (2015).
     https://doi.org/10.1007/s13538-015-0337-8)
@@ -114,7 +119,7 @@ def sample_trigonometric(n: int, d: int) -> list[list[float]]:
         d (int): dimension.
     Returns:
         List of length n of d-dimensional lists.
-    '''
+    """
     assert n >= 1
     assert d >= 2
 
@@ -141,9 +146,10 @@ def sample_trigonometric(n: int, d: int) -> list[list[float]]:
 
 
 def sample_exponential(n: int, d: int) -> list[list[float]]:
-    '''
-    Generates a list of random vectors by means of the inverse
-    exponential distribution function: I.e., the i-th component of the rpv is sampled
+    """
+    Generate a list of random vectors by means of the inverse exponential distribution function.
+
+    More precisely, the i-th component of the rpv is sampled
     uniformly at random from [0, s] where s is the sum of the 0, ..., (i-1)st
     components. The last component is finally (1-s). This way it is unsured that
     the vectors are normalised.
@@ -153,7 +159,7 @@ def sample_exponential(n: int, d: int) -> list[list[float]]:
         d (int): dimension.
     Returns:
         List of length n of d-dimensional lists.
-    '''
+    """
     assert n >= 1
     assert d >= 2
 
@@ -166,8 +172,8 @@ def sample_exponential(n: int, d: int) -> list[list[float]]:
 
 
 def sample_simplex(n: int, d: int) -> list[list[float]]:
-    '''
-    Generates a list of random vectors via simplex sampling.
+    """
+    Generate a list of random vectors via simplex sampling.
 
     See the following paper for details on this method:
     Grimme, C. Picking a Uniformly Random Point from an Arbitrary Simplex.
@@ -178,7 +184,7 @@ def sample_simplex(n: int, d: int) -> list[list[float]]:
         d (int): dimension.
     Returns:
         List of length n of d-dimensional lists.
-    '''
+    """
     assert n >= 1
     assert d >= 2
 

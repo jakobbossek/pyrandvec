@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from randvec import sample
+from pyrandvec import sample
 
 # parameters
 n, d = 1000, 3
@@ -7,7 +7,7 @@ n, d = 1000, 3
 # plot
 fig = plt.figure()
 
-methods = ["normalisation", "iterative", "exponential", "simplex", "trigonometric"]
+methods = ['normalisation', 'iterative', 'exponential', 'simplex', 'trigonometric']
 k = 1
 for i, method in enumerate(methods):
     for j, shuffle in enumerate([True, False]):
@@ -28,7 +28,7 @@ for i, method in enumerate(methods):
         sp.set_zlabel('z')
         title = method
         if shuffle:
-            title += " (shuffled)"
+            title += ' (shuffled)'
         sp.set_title(title)
         sp.scatter(xs, ys, zs, marker = 'o')
 
